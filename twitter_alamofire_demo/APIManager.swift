@@ -17,7 +17,6 @@ class APIManager: SessionManager {
     // MARK: TODO: Add App Keys
     static let consumerKey = "tYoio1rGX8JyJh2GpOLIXTr9Y"
     static let consumerSecret = "DTGLKywo8ez50QUnZSsH8tmuAfA8S3I9ID0YHyOeqR1qeskXqQ"
-    
     static let requestTokenURL = "https://api.twitter.com/oauth/request_token"
     static let authorizeURL = "https://api.twitter.com/oauth/authorize"
     static let accessTokenURL = "https://api.twitter.com/oauth/access_token"
@@ -39,6 +38,7 @@ class APIManager: SessionManager {
                     failure(error)
                 } else if let user = user {
                     print("Welcome \(user.name)")
+                    let user = User.current
                     
                     // MARK: TODO: set User.current, so that it's persisted
                     
