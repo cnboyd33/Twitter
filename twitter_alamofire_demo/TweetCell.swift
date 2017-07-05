@@ -25,16 +25,24 @@ class TweetCell: UITableViewCell {
     
     @IBAction func onRetweet(_ sender: Any) {
         if retweetButton.isSelected {
-            retweetButton.isSelected = true
-        } else {
             retweetButton.isSelected = false
+            tweet.retweeted = true
+            tweet.retweetCount += 1
+        } else {
+            retweetButton.isSelected = true
+            tweet.retweeted = false
+            tweet.retweetCount -= 1
         }
     }
     @IBAction func onFavorite(_ sender: Any) {
         if favButton.isSelected {
-            favButton.isSelected = true
-        } else {
             favButton.isSelected = false
+            tweet.favorited = true
+            tweet.favoriteCount += 1
+        } else {
+            favButton.isSelected = true
+            tweet.favorited = false
+            tweet.favoriteCount -= 1
         }
         
     }
@@ -47,8 +55,15 @@ class TweetCell: UITableViewCell {
             authorLabel.text = tweet.user.name
             dateLabel.text = tweet.createdAtString
             screenNameLabel.text = "@" + tweet.user.screenName!
-            favCountLabel.text = String(describing: tweet.favoriteCount)
+            favCountLabel.text = String(tweet.favoriteCount)
             retweetCountLabel.text = String(tweet.retweetCount)
+            
+            // Make profile pic circular
+            profileImageView.layer.borderWidth = 1
+            profileImageView.layer.masksToBounds = false
+            profileImageView.layer.borderColor = UIColor.lightGray.cgColor
+            profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+            profileImageView.clipsToBounds = true
             
             
         }

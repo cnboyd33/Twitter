@@ -46,6 +46,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         APIManager.shared.getHomeTimeLine { (tweets, error) in
             if let tweets = tweets {
+                print("refreshing")
                 self.tweets = tweets
                 self.tableView.reloadData()
             } else if let error = error {
