@@ -7,13 +7,16 @@
 //
 
 import Foundation
+import AlamofireImage
+
 
 class User {
     
     var name: String?
-    var screename: String?
+    var screenName: String?
     private static var _current: User?
     var dictionary: [String: Any]?
+    var profileImage: String
     
   
     static var current: User? {
@@ -42,6 +45,8 @@ class User {
     init(dictionary: [String: Any]) {
         self.dictionary = dictionary
         name = dictionary["name"] as! String
+        screenName = dictionary["screen_name"] as! String
+        profileImage = dictionary["profile_image_url_https"] as! String
         
     }
     
