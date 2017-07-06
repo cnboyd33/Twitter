@@ -27,26 +27,78 @@ class TweetCell: UITableViewCell {
         if retweetButton.isSelected {
             retweetButton.isSelected = false
             tweet.retweeted = true
-            tweet.retweetCount += 1
+            tweet.retweetCount -= 1
+            APIManager.shared.retweet(tweet) { (tweet: Tweet?, error: Error?) in
+                if let  error = error {
+                    print("Error favoriting tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    print("Successfully favorited the following Tweet: \n\(tweet.text)")
+                }
+            }
+
+            refreshData()
+            
         } else {
             retweetButton.isSelected = true
             tweet.retweeted = false
-            tweet.retweetCount -= 1
+            tweet.retweetCount += 1
+            APIManager.shared.unretweet(tweet) { (tweet: Tweet?, error: Error?) in
+                if let  error = error {
+                    print("Error favoriting tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    print("Successfully favorited the following Tweet: \n\(tweet.text)")
+                }
+            }
+
+            refreshData()
         }
     }
     @IBAction func onFavorite(_ sender: Any) {
         if favButton.isSelected {
             favButton.isSelected = false
             tweet.favorited = true
-            tweet.favoriteCount += 1
+            tweet.favoriteCount -= 1
+            APIManager.shared.favorite(tweet) { (tweet: Tweet?, error: Error?) in
+                if let  error = error {
+                    print("Error favoriting tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    print("Successfully favorited the following Tweet: \n\(tweet.text)")
+                }
+            }
+            refreshData()
         } else {
             favButton.isSelected = true
             tweet.favorited = false
-            tweet.favoriteCount -= 1
+            tweet.favoriteCount += 1
+            APIManager.shared.unfavorite(tweet) { (tweet: Tweet?, error: Error?) in
+                if let  error = error {
+                    print("Error favoriting tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    print("Successfully favorited the following Tweet: \n\(tweet.text)")
+                }
+            }
+
+            refreshData()
         }
-        
     }
     
+    func refreshData() {
+        profileImageView.af_setImage(withURL: URL(string: tweet.user.profileImage)!)
+        tweetTextView.text = tweet.text
+        authorLabel.text = tweet.user.name
+        dateLabel.text = tweet.createdAtString
+        screenNameLabel.text = "@" + tweet.user.screenName!
+        favCountLabel.text = String(tweet.favoriteCount)
+        retweetCountLabel.text = String(tweet.retweetCount)
+        
+        // Make profile pic circular
+        profileImageView.layer.borderWidth = 1
+        profileImageView.layer.masksToBounds = false
+        profileImageView.layer.borderColor = UIColor.lightGray.cgColor
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.clipsToBounds = true
+
+    }
     
     var tweet: Tweet! {
         didSet {

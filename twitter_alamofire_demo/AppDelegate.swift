@@ -17,9 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // MARK: TODO: Check for logged in user
-        if User.current == nil {
+        if User.current != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let homeTimeLineViewController = storyboard.instantiateViewController(withIdentifier: "TimelineViewController")
+            let homeTimeLineViewController = storyboard.instantiateViewController(withIdentifier: "TweetsTabController")
             window?.rootViewController = homeTimeLineViewController
         } else {
             print("user doesn't exist")

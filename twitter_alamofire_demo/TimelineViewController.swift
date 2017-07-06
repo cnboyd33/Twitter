@@ -13,21 +13,19 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     var tweets: [Tweet] = []
     
     @IBOutlet weak var tableView: UITableView!
+    @IBAction func onComposeTweet(_ sender: Any) {
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(TimelineViewController.refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         //insert new data into the tableview
         tableView.insertSubview(refreshControl, at: 0)
-        
         tableView.dataSource = self
         tableView.delegate = self
-        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
-        
         APIManager.shared.getHomeTimeLine { (tweets, error) in
             if let tweets = tweets {
                 self.tweets = tweets
@@ -39,9 +37,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    @IBAction func onComposeTweet() {
-        performSegue(withIdentifier: "ComposeSegue", sender: nil)
-    }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         APIManager.shared.getHomeTimeLine { (tweets, error) in
