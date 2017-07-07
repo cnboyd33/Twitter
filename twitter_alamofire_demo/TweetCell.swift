@@ -24,6 +24,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var mediaImageView: UIImageView!
     @IBOutlet weak var favButton: UIButton!
+    @IBOutlet weak var replyTextConstraint: NSLayoutConstraint!
     
     @IBAction func onRetweet(_ sender: Any) {
         if retweetButton.isSelected {
@@ -122,9 +123,11 @@ class TweetCell: UITableViewCell {
             if let url = tweet.displayURL {
                 mediaImageView.isHidden = false
                 mediaImageView.af_setImage(withURL: url)
+                replyTextConstraint.constant = 400
                 
             } else {
                 mediaImageView.isHidden = true
+                replyTextConstraint.constant = 4
                 
             }
         }
