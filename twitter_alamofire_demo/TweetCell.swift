@@ -22,6 +22,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var retweetCountLabel: UILabel!
     @IBOutlet weak var favCountLabel: UILabel!
     @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var mediaImageView: UIImageView!
     @IBOutlet weak var favButton: UIButton!
     
     @IBAction func onRetweet(_ sender: Any) {
@@ -118,7 +119,14 @@ class TweetCell: UITableViewCell {
             profileImageView.layer.cornerRadius = profileImageView.frame.height/2
             profileImageView.clipsToBounds = true
             
-            
+            if let url = tweet.displayURL {
+                mediaImageView.isHidden = false
+                mediaImageView.af_setImage(withURL: url)
+                
+            } else {
+                mediaImageView.isHidden = true
+                
+            }
         }
     }
     
