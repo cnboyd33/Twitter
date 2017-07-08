@@ -17,6 +17,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var tweetButton: UIButton!
+    @IBOutlet weak var characterCountLabel: UILabel!
     
     weak var delegate: ComposeViewControllerDelegate?
     
@@ -53,6 +54,20 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
                 }
             }
         }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let text = textView.text!
+        let remainingCount = 140 - text.characters.count
+        let count = text.characters.count
+        characterCountLabel.text = String(remainingCount)
+        
+        if remainingCount < 21 {
+            characterCountLabel.textColor = UIColor.red
+        } else {
+            characterCountLabel.textColor = UIColor.white
+        }
+        
     }
     
 
